@@ -1,7 +1,11 @@
 package com.lsj.demo;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
@@ -23,6 +27,22 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 	// NeedLogoutInterceptor 연결
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
+	
+	// 등록
+	@Value("${app.frontend.allowed-origins:http://localhost:3000,http://localhost:5173}")
+	private String allowedOrigins;
+
+	// 웹 연동을 위한 코드
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		String[] origins = Arrays.stream(allowedOrigins.split(",")).map(String::trim).filter(s -> !s.isEmpty())
+				.toArray(String[]::new);
+
+		registry.addMapping("/api/**").allowedOriginPatterns(origins)
+				.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*")
+				.allowCredentials(true).maxAge(3600);
+	}
+
 
 	// 등록
 	@Override
@@ -45,6 +65,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 		ir.addPathPatterns("/favicon.ico");
 		ir.excludePathPatterns("/resource/**");
 		ir.excludePathPatterns("/error");
+		ir.excludePathPatterns("/api/**");
 
 		ir = registry.addInterceptor(needLoginInterceptor);
 		ir.addPathPatterns("/usr/article/write");

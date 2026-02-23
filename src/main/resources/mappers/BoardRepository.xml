@@ -11,5 +11,12 @@
 		FROM board
 		WHERE id = #{id} AND delStatus = 0
 	</select>
+	
+	<select id="getBoards" resultType="com.lsj.demo.vo.Board">
+		SELECT *
+		FROM board
+		WHERE delStatus = 0
+		ORDER BY id ASC
+	</select>
 
 </mapper>

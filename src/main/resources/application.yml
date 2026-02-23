@@ -1,10 +1,10 @@
 server:
   port: 8081
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/Spring_Demo_26_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
@@ -14,3 +14,6 @@ mybatis:
   type-aliases-package: com.lsj.demo.vo
 
   mapper-locations: classpath:/mappers/**/*.xml
+app:
+  frontend:
+    allowed-origins: http://localhost:3000,http://localhost:5173,http://brave-minds-791079.framer.app/community-board
