@@ -35,12 +35,18 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 	// 웹 연동을 위한 코드
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		String[] origins = Arrays.stream(allowedOrigins.split(",")).map(String::trim).filter(s -> !s.isEmpty())
-				.toArray(String[]::new);
+	    String[] origins = Arrays.stream(allowedOrigins.split(","))
+	            .map(String::trim)
+	            .filter(s -> !s.isEmpty())
+	            .map(s -> s.endsWith("/") ? s.substring(0, s.length() - 1) : s) // 슬래시 제거
+	            .toArray(String[]::new);
 
-		registry.addMapping("/api/**").allowedOriginPatterns(origins)
-				.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*")
-				.allowCredentials(true).maxAge(3600);
+	    registry.addMapping("/api/**")
+	            .allowedOrigins(origins)
+	            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+	            .allowedHeaders("*")
+	            .allowCredentials(true)
+	            .maxAge(3600);
 	}
 
 

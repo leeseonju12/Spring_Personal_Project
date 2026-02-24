@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:
 #  mvc:
 #    view:
@@ -16,4 +16,4 @@ mybatis:
   mapper-locations: classpath:/mappers/**/*.xml
 app:
   frontend:
-    allowed-origins: http://localhost:3000,http://localhost:5173,http://brave-minds-791079.framer.app/community-board
+    allowed-origins: http://localhost:3000,http://localhost:5173,https://raceready.framer.website
