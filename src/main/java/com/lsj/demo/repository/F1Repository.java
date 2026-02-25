@@ -24,5 +24,7 @@ public interface F1Repository {
 
 	F1RaceSession getLastRaceSessionByYear(@Param("year") int year);
 
+	Long getLatestChampionshipSessionKeyByYear(@Param("year") int year);
+
 	List<F1DriverChampionshipRow> getDriverChampionshipRowsBySessionKey(@Param("sessionKey") long sessionKey);
 }

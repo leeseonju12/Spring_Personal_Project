@@ -85,6 +85,18 @@
 		LIMIT 1
 	</select>
 
+
+	<select id="getLatestChampionshipSessionKeyByYear" parameterType="int" resultType="long">
+		SELECT S.session_key
+		FROM f1_championship_driver_snapshot AS S
+		INNER JOIN f1_session AS FS
+		  ON FS.session_key = S.session_key
+		WHERE S.year = #{year}
+		  AND FS.session_name = 'Race'
+		ORDER BY FS.date_start DESC, S.session_key DESC
+		LIMIT 1
+	</select>
+
 	<select id="getDriverChampionshipRowsBySessionKey" parameterType="long"
 		resultType="com.lsj.demo.vo.f1.F1DriverChampionshipRow">
 		SELECT S.position_current AS position,

@@ -31,6 +31,9 @@
 					<a href="/">HOME</a>
 				</li>
 				<li class="hover:underline">
+					<a href="/usr/f1/driverchampionship">F1 드라이버 순위</a>
+				</li>
+				<li class="hover:underline">
 					<div class="dropdown dropdown-hover">
 						<div tabindex="0" role="button">LIST</div>
 						<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
