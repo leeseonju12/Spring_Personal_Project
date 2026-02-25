@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lsj.demo.repository.F1Repository">
+
+	<insert id="upsertRaceSession" parameterType="com.lsj.demo.vo.f1.F1RaceSession">
+		INSERT INTO f1_session
+		(session_key, meeting_key, year, session_name, race_name, date_start, updated_at)
+		VALUES
+		(#{sessionKey}, #{meetingKey}, #{year}, #{sessionName}, #{raceName}, #{dateStart}, NOW())
+		ON DUPLICATE KEY UPDATE
+		meeting_key = VALUES(meeting_key),
+		year = VALUES(year),
+		session_name = VALUES(session_name),
+		race_name = VALUES(race_name),
+		date_start = VALUES(date_start),
+		updated_at = NOW()
+	</insert>
+
+	<insert id="upsertSessionDriver" parameterType="com.lsj.demo.vo.f1.F1SessionDriver">
+		INSERT INTO f1_session_driver
+		(session_key, driver_number, full_name, acronym, team_name, headshot_url, updated_at)
+		VALUES
+		(#{sessionKey}, #{driverNumber}, #{fullName}, #{acronym}, #{teamName}, #{headshotUrl}, NOW())
+		ON DUPLICATE KEY UPDATE
+		full_name = VALUES(full_name),
+		acronym = VALUES(acronym),
+		team_name = VALUES(team_name),
+		headshot_url = VALUES(headshot_url),
+		updated_at = NOW()
+	</insert>
+
+	<insert id="upsertChampionshipDriverSnapshot"
+		parameterType="com.lsj.demo.vo.f1.F1ChampionshipDriverSnapshot">
+		INSERT INTO f1_championship_driver_snapshot
+		(session_key, meeting_key, year, driver_number, points_start, points_current, position_start,
+		position_current, raw_json, updated_at)
+		VALUES
+		(#{sessionKey}, #{meetingKey}, #{year}, #{driverNumber}, #{pointsStart}, #{pointsCurrent},
+		#{positionStart}, #{positionCurrent}, #{rawJson}, NOW())
+		ON DUPLICATE KEY UPDATE
+		meeting_key = VALUES(meeting_key),
+		year = VALUES(year),
+		points_start = VALUES(points_start),
+		points_current = VALUES(points_current),
+		position_start = VALUES(position_start),
+		position_current = VALUES(position_current),
+		raw_json = VALUES(raw_json),
+		updated_at = NOW()
+	</insert>
+
+	<select id="getSeasonYears" resultType="int">
+		SELECT DISTINCT year
+		FROM f1_session
+		WHERE session_name = 'Race'
+		ORDER BY year DESC
+	</select>
+
+	<select id="getRaceSessionsByYear" parameterType="int" resultType="com.lsj.demo.vo.f1.F1RaceSession">
+		SELECT session_key AS sessionKey,
+		       meeting_key AS meetingKey,
+		       year,
+		       session_name AS sessionName,
+		       race_name AS raceName,
+		       date_start AS dateStart
+		FROM f1_session
+		WHERE year = #{year}
+		  AND session_name = 'Race'
+		ORDER BY date_start ASC, session_key ASC
+	</select>
+
+	<select id="getLastRaceSessionByYear" parameterType="int" resultType="com.lsj.demo.vo.f1.F1RaceSession">
+		SELECT session_key AS sessionKey,
+		       meeting_key AS meetingKey,
+		       year,
+		       session_name AS sessionName,
+		       race_name AS raceName,
+		       date_start AS dateStart
+		FROM f1_session
+		WHERE year = #{year}
+		  AND session_name = 'Race'
+		ORDER BY date_start DESC, session_key DESC
+		LIMIT 1
+	</select>
+
+	<select id="getDriverChampionshipRowsBySessionKey" parameterType="long"
+		resultType="com.lsj.demo.vo.f1.F1DriverChampionshipRow">
+		SELECT S.position_current AS position,
+		       S.driver_number AS driverNumber,
+		       D.full_name AS fullName,
+		       D.acronym,
+		       D.team_name AS teamName,
+		       D.headshot_url AS headshotUrl,
+		       S.points_current AS points,
+		       (S.points_current - S.points_start) AS pointsDeltaInRace,
+		       (S.position_start - S.position_current) AS positionDeltaInRace
+		FROM f1_championship_driver_snapshot AS S
+		LEFT JOIN f1_session_driver AS D
+		  ON D.session_key = S.session_key
+		 AND D.driver_number = S.driver_number
+		WHERE S.session_key = #{sessionKey}
+		ORDER BY S.position_current ASC, S.driver_number ASC
+	</select>
+
+</mapper>

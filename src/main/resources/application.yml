@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
 #  mvc:
 #    view:
@@ -7,7 +7,7 @@ spring:
 #      suffix: .jsp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/Spring_Demo_26_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/Spring_project_26_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
     username: root
     password: 
 mybatis:
@@ -17,3 +17,5 @@ mybatis:
 app:
   frontend:
     allowed-origins: http://localhost:3000,http://localhost:5173,https://raceready.framer.website
+  openf1:
+    base-url: https://api.openf1.org/v1
