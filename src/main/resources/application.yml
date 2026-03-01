@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   mvc:
     view:
@@ -18,4 +18,4 @@ app:
   frontend:
     allowed-origins: http://localhost:3000,http://localhost:5173,https://raceready.framer.website
   openf1:
-    base-url: https://api.openf1.org/v1
+    base-url: https://api.openf1.org/v1 

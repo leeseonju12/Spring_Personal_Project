@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
@@ -43,7 +42,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 
 	    registry.addMapping("/api/**")
 	            .allowedOrigins(origins)
-	            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+	            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
 	            .allowedHeaders("*")
 	            .allowCredentials(true)
 	            .maxAge(3600);

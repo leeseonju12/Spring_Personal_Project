@@ -32,6 +32,13 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+		<!-- Flask 서버와 HTTP 통신 (RestTemplate JSON 파싱) -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -104,6 +111,8 @@
 		<!-- JSTL -->
 		<!--
 		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
+		<!-- 
+		jsp에서 foreach 사용을 위해 주석-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -116,6 +125,7 @@
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
