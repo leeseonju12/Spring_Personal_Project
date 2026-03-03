@@ -111,8 +111,7 @@
 		<!-- JSTL -->
 		<!--
 		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
-		<!-- 
-		jsp에서 foreach 사용을 위해 주석-->
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
